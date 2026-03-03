@@ -1,0 +1,96 @@
+companies:
+
+  - name: "Palo Alto Networks"
+    ticker: "PANW"
+    adzuna_query: "Palo Alto Networks"
+    adzuna_company_aliases:
+      - "Palo Alto Networks"
+      - "Palo Alto Networks Inc"
+      - "Palo Alto Networks, Inc"
+    exclude_terms:
+      - "Palo Alto, CA"
+      - "Palo Alto CA"
+    coverage_confidence: "high"
+    claims:
+      - id: "panw_platform_ai"
+        text: "NGS ARR reached $5.6 billion, driven by platformisation and AI-driven security operations across Prisma Cloud, Cortex, and SASE."
+        filing_type: "10-K FY2025"
+        filing_date: "2025-09-01"
+        relevant_functions:
+          - "Engineering"
+          - "R&D"
+          - "Sales"
+        hypothesis: >
+          If platformisation is genuine and AI capabilities are being built
+          internally, we would expect meaningful R&D and Engineering hiring
+          with a notable AI/ML component. Heavy Sales hiring relative to
+          Engineering would suggest go-to-market execution rather than
+          platform maturation.
+      - id: "panw_protect_ai_acquisition"
+        text: "The acquisition of Protect AI in July 2025 strengthens our AI security capabilities and accelerates our AI-native platform strategy."
+        filing_type: "10-K FY2025"
+        filing_date: "2025-09-01"
+        relevant_functions:
+          - "Engineering"
+          - "R&D"
+        hypothesis: >
+          A genuine capability acquisition should manifest in R&D and
+          Engineering hiring around AI security. If the acquisition is
+          primarily for IP or talent retention rather than platform
+          integration, the hiring signal will be muted.
+      - id: "panw_israel_workforce"
+        text: "Many of our Israeli employees are obligated to perform annual military reserve duty and have been called for active duty due to ongoing hostilities in the region."
+        filing_type: "10-K FY2025"
+        filing_date: "2025-09-01"
+        relevant_functions:
+          - "Engineering"
+          - "R&D"
+        hypothesis: >
+          If Israeli R&D headcount is constrained by military obligations,
+          compensating hires in other geographies (US, Europe) may be
+          visible in the data. Elevated Engineering hiring outside of
+          Israel would support this risk crystallising.
+
+  - name: "CrowdStrike"
+    ticker: "CRWD"
+    adzuna_query: "CrowdStrike"
+    adzuna_company_aliases:
+      - "CrowdStrike"
+      - "CrowdStrike Holdings"
+      - "CrowdStrike Inc"
+      - "CrowdStrike, Inc"
+    exclude_terms: []
+    coverage_confidence: "high"  # Validated: Adzuna ~67, official ~62 (UK spot check)
+
+  - name: "Fortinet"
+    ticker: "FTNT"
+    adzuna_query: "Fortinet"
+    adzuna_company_aliases:
+      - "Fortinet"
+      - "Fortinet Inc"
+      - "Fortinet, Inc"
+    exclude_terms: []
+    require_company_field_match: true  # "Fortinet" is widely used as a product/technology
+                                       # term in third-party job descriptions (e.g. "Fortinet
+                                       # firewall experience required"). Description-match
+                                       # generates high false positive rates; company field
+                                       # is the reliable signal here.
+    coverage_confidence: "medium"  # Not yet spot-checked — assume high given market cap
+
+  - name: "Zscaler"
+    ticker: "ZS"
+    adzuna_query: "Zscaler"
+    adzuna_company_aliases:
+      - "Zscaler"
+      - "Zscaler Inc"
+      - "Zscaler, Inc"
+    exclude_terms: []
+    coverage_confidence: "medium"
+
+# Pipeline configuration
+pipeline:
+  country: "us"
+  results_per_page: 50
+  max_pages: 5              # Hard cap: 250 results per company per run
+  cache_ttl_days: 7         # Re-query after this many days
+  max_daily_requests: 90    # Stay under Adzuna's 100/day free tier limit
